@@ -1,0 +1,62 @@
+<script>
+    // Configuration settings -- CHANGE THESE VALUES
+
+    // Your Mapbox API access token, found at: https://www.mapbox.com/studio/account/tokens/
+    var MAPBOX_ACCESS_TOKEN = "";
+
+    // If you're running the Go program on localhost, do not change this.
+    var API_URL = "http://localhost:8080/"; // of the Go program, not Mapbox!
+</script>
+
+<!-- DO NOT CHANGE BELOW UNLESS YOU KNOW WHAT YOU'RE DOING -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Live Player Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.39.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+		.marker {
+		  background-image: url('dot.gif');
+		  width: 10px;
+		  height: 10px;
+		}
+    </style>
+</head>
+<body>
+    <div id='map'></div>
+        <script>
+            mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/mapbox/dark-v9', //stylesheet location
+                center: [-30, 20], // starting position
+                zoom: 2 // starting zoom
+            });
+
+            $.ajax({
+              url: API_URL,
+              method: 'GET'
+            }).then(function(data) {
+              data.forEach(function(marker) {
+            	  // create a HTML element for each feature
+            	  var el = document.createElement('div');
+            	  el.className = 'marker';
+
+            	  // make a marker for each feature and add to the map
+            	  new mapboxgl.Marker(el, { })
+            	  .setLngLat([marker.Lon, marker.Lat])
+            	  .addTo(map);
+            	  // console.log("adding: " + marker.Lat + ", " + marker.Lon);
+              });
+            });
+        </script>
+    </body>
+</html>

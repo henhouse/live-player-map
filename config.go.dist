@@ -1,0 +1,9 @@
+package main
+
+const (
+	DB_HOST     = "hostname"
+	DB_USERNAME = "username"
+	DB_PASSWORD = "password"
+	DB_DATABASE = "auth"
+	DB_PORT     = "3306"
+)
