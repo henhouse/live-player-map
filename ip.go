@@ -147,9 +147,11 @@ func Return() []Location {
 	// Initial our return object.
 	ret := []Location{}
 
-	// Loop through all addresses stored in the IPTable map, appending a new Location to the return array with its data.
-	for _, loc := range IPTable {
-		ret = append(ret, Location{Addr: loc.Address, Lat: loc.Latitude, Lon: loc.Longitude})
+	// Loop through currently online addresses, grabbing its IP-object for coordinate info out of the IPTable map, and
+	// append a new Location object to the return array with its corresponding coordinates.
+	for _, val := range OnlineIPs {
+		ip := IPTable[val]
+		ret = append(ret, Location{Addr: ip.Address, Lat: ip.Latitude, Lon: ip.Longitude})
 	}
 
 	return ret
