@@ -38,9 +38,8 @@ const MaxLookupsPerMinute = 150
 // Location refers to a single user location in the world based on their IP address. This is the data returned to the
 // client via our API to populate a live map.
 type Location struct {
-	Addr string
-	Lat  float32
-	Lon  float32
+	Lat float32
+	Lon float32
 }
 
 // lastUpdate holds a time value references the last time an update completed successfully.
@@ -151,7 +150,7 @@ func Return() []Location {
 	// append a new Location object to the return array with its corresponding coordinates.
 	for _, val := range OnlineIPs {
 		ip := IPTable[val]
-		ret = append(ret, Location{Addr: ip.Address, Lat: ip.Latitude, Lon: ip.Longitude})
+		ret = append(ret, Location{Lat: ip.Latitude, Lon: ip.Longitude})
 	}
 
 	return ret
